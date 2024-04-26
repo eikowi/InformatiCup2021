@@ -135,7 +135,7 @@ export default Vue.component("sp-state", {
     async getRestRequest(state) {
       return await fetch(this.connection.rest, {
         method: 'POST',
-        body: JSON.parse(state),
+        body: JSON.stringify(state),
         headers: {
           'Content-Type': 'application/json'
         }
