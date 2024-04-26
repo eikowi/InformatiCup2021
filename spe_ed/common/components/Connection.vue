@@ -32,6 +32,12 @@ limitations under the License.
               <input v-model="connection.key" :disabled="connection.established" name="key" />
             </td>
           </tr>
+          <tr>
+            <td class="label">REST-API:</td>
+            <td>
+              <input v-model="connection.rest" :disabled="connection.established" name="rest" />
+            </td>
+          </tr>
         </table>
 
         <button :disabled="disabled || !connection.key || connection.established" @click="$emit('connect')" accesskey="1">Verbinden</button>

@@ -118,22 +118,22 @@ export default Vue.component("sp-state", {
       }
       this.busy = false;
       if (this.connection.rest != "") {
-        this.runWithRestBot()
+        await this.runWithRestBot()
       }
     },
 
     async runWithRestBot() {
       this.log("Starting with Rest");
       while (this.connection.established && this.stateInternal?.players[this.stateInternal.you]?.active) {
-        let response = this.getRestRequest(this.stateInternal);
+        let response = await this.getRestRequest(this.stateInternal);
         this.log("Rest:" + response);
         await this.send(response);
         this.log(JSON.stringify(this.stateInternal));
       }
     },
 
-    getRestRequest(state) {
-      return await fetch('http://localhost:8080/bot', {
+    async getRestRequest(state) {
+      return await fetch(this.connection.rest, {
         method: 'POST',
         body: state,
         headers: {
