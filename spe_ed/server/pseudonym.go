@@ -102,12 +102,12 @@ func (p *Pseudonym) worker() {
 func (p *Pseudonym) Get(API string) string {
 	p.l.Lock()
 	defer p.l.Unlock()
-	v, ok := p.Dict[API]
-	if !ok {
-		v = NewPseudonym()
-		p.Dict[API] = v
-	}
-	return v
+	//v, ok := p.Dict[API]
+	//if !ok {
+	//	v = NewPseudonym()
+	//	p.Dict[API] = v
+	//}
+	return API
 }
 
 var wordlist = []string{

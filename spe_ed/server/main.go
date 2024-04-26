@@ -15,19 +15,19 @@
 
 // This package contains the server for the game "spe_ed".
 //
-// Prequisites
+// # Prequisites
 //
 // - Install go
 //
-// Build
+// # Build
 //
 // `go build`
 //
-// Run
+// # Run
 //
 // `./server`
 //
-// Options
+// # Options
 //
 // see `./server -help`
 //
@@ -50,6 +50,7 @@ import (
 
 var (
 	log           *golog.Logger
+	maxPlayers    int
 	disableTime   bool
 	serverAddress = "localhost:10101"
 	statsEnabled  bool
@@ -65,6 +66,7 @@ func init() {
 func main() {
 	flag.BoolVar(&disableLogging, "disableLogging", false, "Disables logging of games")
 	wait := flag.String("wait", "5m", "Waiting time for new games. Must be at least 0s (0=instant start for debugging). Value must be parseable by time.Duration")
+	flag.IntVar(&maxPlayers, "maxPlayers", PlayersPerGame, "Number of max. players")
 	flag.BoolVar(&disableTime, "disableTime", false, "Disables time endpoint")
 	flag.StringVar(&serverAddress, "address", serverAddress, "Address of the server")
 	flag.BoolVar(&statsEnabled, "stats", false, "Enables stats on /spe_ed_stats")

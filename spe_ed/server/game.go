@@ -582,7 +582,11 @@ func (g *Game) MissingPlayer() int {
 // Caller has to lock the game.
 func (g *Game) setMaxPlayer() {
 	if g.MaxPlayer == 0 {
-		g.MaxPlayer = rand.Intn(PlayersPerGame-1) + 2
+		if maxPlayers == PlayersPerGame {
+			g.MaxPlayer = rand.Intn(maxPlayers-1) + 2
+		} else {
+			g.MaxPlayer = maxPlayers
+		}
 	}
 }
 

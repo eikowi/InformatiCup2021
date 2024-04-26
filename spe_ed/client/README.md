@@ -7,3 +7,6 @@
 
 # Build
 `make build`
+
+# Start
+`npx --proxy ... parcel index.html`

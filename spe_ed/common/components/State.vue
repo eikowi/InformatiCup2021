@@ -110,11 +110,38 @@ export default Vue.component("sp-state", {
         this.connection.established = true;
         this.log("Verbunden. Warte auf Initialzustand...");
         await this.receive();
-      } catch {
-        this.log("Verbindung fehlgeschlagen.");
+      } catch (e) {
+        if (!(e instanceof Error)) {
+          e = new Error(e);
+        }
+        this.log("Verbindung fehlgeschlagen: " + e.message);
       }
       this.busy = false;
+      if (this.connection.rest != "") {
+        this.runWithRestBot()
+      }
     },
+
+    async runWithRestBot() {
+      this.log("Starting with Rest");
+      while (this.connection.established && this.stateInternal?.players[this.stateInternal.you]?.active) {
+        let response = this.getRestRequest(this.stateInternal);
+        this.log("Rest:" + response);
+        await this.send(response);
+        this.log(JSON.stringify(this.stateInternal));
+      }
+    },
+
+    getRestRequest(state) {
+      return await fetch('http://localhost:8080/bot', {
+        method: 'POST',
+        body: state,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    },
+
     async onDisconnect() {
       await this.connection.client.disconnect();
       this.connection.deadline = undefined;
@@ -156,7 +183,7 @@ export default Vue.component("sp-state", {
         await this.receive();
       } else {
         this.busy = false;
-        this.tickInterval = setInterval(this.tick, 500);
+        this.tickInterval = setInterval(this.tick, 100);
         this.tick();
       }
     },
@@ -192,8 +219,8 @@ export default Vue.component("sp-state", {
     return {
       busy: false,
       connection: {
-        url: "wss://msoll.de/spe_ed",
-        key: "",
+        url: "ws://THE-IP:10101/spe_ed",
+        key: "YOUR-KEY",
         client: undefined,
         established: false,
         passive: false,

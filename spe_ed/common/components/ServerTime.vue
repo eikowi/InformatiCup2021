@@ -33,7 +33,7 @@ import Vue from "vue";
 export default Vue.component("sp-server-time", {
   async mounted() {
     try {
-      let response = await fetch("https://msoll.de/spe_ed_time");
+      let response = await fetch("http://THE-IP:10101/spe_ed_time");
       var json = await response.json();
       let time = new Date(json.time);
       time.setMilliseconds(time.getMilliseconds() + json.milliseconds);
