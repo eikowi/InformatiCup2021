@@ -9,4 +9,4 @@
 `make build`
 
 # Start
-`npx --proxy ... parcel index.html`
+`npx --proxy http://prisma.corp.draeger.global:8080 parcel index.html`

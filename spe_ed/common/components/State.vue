@@ -221,7 +221,7 @@ export default Vue.component("sp-state", {
       connection: {
         url: "ws://THE-IP:10101/spe_ed",
         key: "YOUR-KEY",
-        rest: "localhost:8080/bot",
+        rest: "http://localhost:8080/bot",
         client: undefined,
         established: false,
         passive: false,
