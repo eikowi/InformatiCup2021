@@ -125,7 +125,7 @@ export default Vue.component("sp-state", {
     async runWithRestBot() {
       this.log("Starting with Rest");
       while (this.connection.established && this.stateInternal?.players[this.stateInternal.you]?.active) {
-        let response = await this.getRestRequest(this.stateInternal);
+        let response = await this.getRestRequest(this.stateInternal).text;
         this.log("Rest:" + response);
         await this.send(response);
         this.log(JSON.stringify(this.stateInternal));
@@ -135,7 +135,7 @@ export default Vue.component("sp-state", {
     async getRestRequest(state) {
       return await fetch(this.connection.rest, {
         method: 'POST',
-        body: state,
+        body: JSON.parse(state),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -221,6 +221,7 @@ export default Vue.component("sp-state", {
       connection: {
         url: "ws://THE-IP:10101/spe_ed",
         key: "YOUR-KEY",
+        rest: "localhost:8080/bot",
         client: undefined,
         established: false,
         passive: false,
